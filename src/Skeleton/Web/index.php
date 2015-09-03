@@ -1,27 +1,28 @@
 <?php
+
 ini_set('display_errors', 1);
 
-define("APPLICATION_PATH",__DIR__ . DIRECTORY_SEPARATOR . "App" . DIRECTORY_SEPARATOR);
-define("APPLICATION_MODULE_PATH", APPLICATION_PATH . "Module" . DIRECTORY_SEPARATOR);
+//TODO application (ServiceLocator)
+//$application['request'] = new Request()
+//$application['Foo'] = new Foo()
 
-require __DIR__ . '/vendor/autoload.php';
+//Constante
+define("APPLICATION_PATH", dirname(__DIR__) . DIRECTORY_SEPARATOR . "App" . DIRECTORY_SEPARATOR);
+define("APPLICATION_MODULE_PATH", APPLICATION_PATH . "Modules" . DIRECTORY_SEPARATOR);
 
-/* $simpleRender = new MickaelBaudoin\SimpleRender\Render\SimpleRender();
+require __DIR__ . '/../vendor/autoload.php';
 
-$simpleRender->setPathLayouts(__DIR__ . "/layouts/");
-$simpleRender->setPathViews(__DIR__ . "/views/");
+//SimpleRender
+$view = new MickaelBaudoin\SimpleRender\Render\SimpleRender();
+$view->setPathLayouts(APPLICATION_PATH . "Layouts/");
+$view->setPathViews(APPLICATION_MODULE_PATH . "Front/Views/");
+$view->setPathViews(APPLICATION_MODULE_PATH . "Front/Views/");
 
-$simpleRender->setNameLayout("default");
-$simpleRender->render("home", array('test' => 'test1', 'choubi' => 'choubi'));
-*/
+//Request
+$request = new MickaelBaudoin\SimplePhp\Request();
 
-require __DIR__ . DIRECTORY_SEPARATOR . "Application.php";
-require __DIR__ . DIRECTORY_SEPARATOR . "Request.php";
-require __DIR__ . DIRECTORY_SEPARATOR . "Dispatcher.php";
-
-
-$request = new Request();
-$dispatcher = new Dispatcher($request);
-die($dispatcher->getModuleName());
+//Dispatcher
+$dispatcher = new MickaelBaudoin\SimplePhp\Dispatcher($request, $view);
+$dispatcher->dispatch();
 
 ?>

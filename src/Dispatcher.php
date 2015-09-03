@@ -1,23 +1,20 @@
 <?php
 
+namespace MickaelBaudoin\SimplePhp;
+
 class Dispatcher{
 	
 	protected $_request;
 
 	protected $_controller;
 
-	protected $_moduleName;
+	protected $_view;
 
-	public function __construct($request)
+	public function __construct($request, $view)
 	{
 		$this->_request = $request;
-		$this->_resolveModule();
-	}	
-
-	public function setRequest($request)
-	{
-		$this->_request = $request;
-		return $this;
+		$this->_view = $view;
+		$this->_resolveController();
 	}
 
 	public function getRequest()
@@ -27,12 +24,19 @@ class Dispatcher{
 
 	protected function _resolveController()
 	{
-		
+		$controller = sprintf("\\App\\Modules\\%s\\Controllers\\%sController", ucfirst($this->_request->getModuleName()), ucfirst($this->_request->getControllerName()));
+		if(!class_exists($controller)){
+			throw new \Exception("Controller $controller not found");
+		}
+		$this->_controller = new $controller($this->_request, $this->_view);
 	}
 
-	protected function _resolveModule()
+	public function dispatch()
 	{
-		
-
+		$action = ucfirst($this->_request->getActionName()) . "Action";
+		if(!method_exists($this->_controller, $action)){
+			throw new \Exception("$action action not found");
+		}
+		$this->_controller->$action();
 	}
 }
