@@ -16,7 +16,7 @@
     },
     "autoload":{
          "psr-4":{
-	      "MickaelBaudoin\\SimplePhp\\" : "src/"
+	      "MickaelBaudoin\\SimplePhp\\" : "src/Core/"
          }
     }
 }

@@ -11,7 +11,8 @@ class Application Extends Container{
 
 	public function __construct()
 	{
-		$this->factory(function(){
+		parent::__construct();
+		$this['Request'] = $this->factory(function(){
 			return new Request();
 		});
 
@@ -19,7 +20,7 @@ class Application Extends Container{
 
 	public function run()
 	{
-		if($this['Debug']){
+		if(isset($this['Debug']) && $this['Debug'] == true){
 			ini_set('display_errors', -1);
 		}
 		

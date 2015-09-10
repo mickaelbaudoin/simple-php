@@ -12,8 +12,6 @@ class Dispatcher{
 
 	public function __construct($request, $view)
 	{
-		var_dump($request);
-		die();
 		$this->_request = $request;
 		$this->_view = $view;
 		$this->_resolveController();
