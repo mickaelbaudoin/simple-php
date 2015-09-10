@@ -9,7 +9,11 @@
         }
     ],
     "version": "dev",
-    "require": {},
+    "require": {
+	"mickaelbaudoin/simple-render": "1.0.x-dev",
+        "pimple/pimple": "~3.0",
+	"doctrine/dbal": "2.5.1"
+    },
     "autoload":{
          "psr-4":{
 	      "MickaelBaudoin\\SimplePhp\\" : "src/"
